@@ -7,7 +7,7 @@ module.exports = {
     client.user.setPresence({
       activities: [
         {
-          name: 'auf ' + guilds.length + ' Servern',
+          name: 'on ' + guilds.length + ' Guilds',
         },
       ],
       status: 'online',

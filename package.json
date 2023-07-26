@@ -4,20 +4,20 @@
   "description": "discord.js v14",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "cmdd": "node ./scripts/cmd-d.js",
+    "cmdg": "node ./scripts/cmd-g.js",
+    "cmds": "node ./scripts/cmd-s.js",
+    "test": "nodemon"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/teshi9459/discord-bot.git"
+    "url": "INSERT_YOUR_GIT_URL_HERE"
   },
-  "author": "",
+  "author": "YOUR_NAME",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/teshi9459/discord-bot/issues"
-  },
-  "homepage": "https://github.com/teshi9459/discord-bot#readme",
   "dependencies": {
-    "@discordjs/rest": "^1.1.0",
-    "discord.js": "^14.3.0"
+    "discord.js": "^14.11.0",
+    "forever": "^4.0.3",
+    "prisma": "^5.0.0"
   }
 }

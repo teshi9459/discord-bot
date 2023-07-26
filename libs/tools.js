@@ -1,125 +1,118 @@
 const fs = require('fs');
+
 module.exports = {
   /**
-   * sortiert Array
-   * @param {Array} ary - Array zu sortieren.
-   * @param {boolean} options - true für log.
+   * Sorts an array of numbers in ascending order.
+   * 
+   * @param {number[]} ary - The input array
+   * @returns {number[]} - The sorted array
    */
-  sort: function (ary, options) {
-    ary = ary.sort(function (a, b) {
-      return a - b;
-    });
-    if (options === true) console.log('tools> sorted an Array');
+  sort(ary) {
+    ary = ary.sort((a, b) => a - b);
     return ary;
   },
+
   /**
-   * invertiert Array
-   * @param {Array} ary - Array zu invertieren.
-   * @param {boolean} options - true für log.
+   * Inverts an array of numbers in descending order.
+   * 
+   * @param {number[]} ary - The input array
+   * @returns {number[]} - The inverted array
    */
-  invert: function (ary, options) {
-    ary = ary.sort(function (a, b) {
-      return b - a;
-    });
-    if (options === true) console.log('tools> inverted an Array');
+  invert(ary) {
+    ary = ary.sort((a, b) => b - a);
     return ary;
   },
+
   /**
-   * wandelt json Datei in Objekt um
-   * @param {String} path - Pfad zur Datei.
-   * @param {boolean} options - true für log.
+   * Reads a JSON file from the specified path and returns the parsed JSON object.
+   * 
+   * @param {string} path - The path to the JSON file
+   * @returns {Object} - The parsed JSON object
    */
-  getJ: function (path, options) {
+  getJ(path) {
     const rawdata = fs.readFileSync(path, 'utf8');
-    if (options === true)
-      console.log('tools> get JSON from ' + path) + ' |\n' + rawdata;
     return JSON.parse(rawdata);
   },
+
   /**
-   * wandelt json Datei in Objekt um
-   * @param {String} path - Pfad zur Datei.
-   * @param {Object} obj - JSON Objekt.
-   * @param {boolean} options - true für log.
+   * Writes a JSON object to the specified path as a JSON file.
+   * 
+   * @param {string} path - The path to write the JSON file
+   * @param {Object} obj - The JSON object to write
    */
-  setJ: function (path, obj, options) {
-    this.path(path, options);
+  setJ(path, obj) {
+    this.path(path);
     const json = JSON.stringify(obj);
     fs.writeFileSync(path, json);
-    if (options === true)
-      console.log('tools> wrote Json to ' + path) + ' | ' + obj;
   },
+
   /**
-   * wartet angegebnene Zeit
-   * @param {Number} ms - Dauer in ms.
-   * @param {boolean} options - true für log.
+   * Waits for the specified number of milliseconds.
+   * 
+   * @param {number} ms - The number of milliseconds to wait
    */
-  wait: function (ms, options) {
-    var start,
-      now = Date.now();
+  wait(ms) {
+    const start = Date.now();
+    let now = start;
     while (now - start < ms) {
       now = Date.now();
     }
-    if (options === true) console.log(`tools> waited ${ms} ms`);
   },
+
   /**
-   * gibt random Nummer zurück
-   * @param {Number} min - kleinste Zahl (inklusive).
-   * @param {Number} max - größte Zahl (inklusive).
-   * @param {boolean} options - true für log.
+   * Generates a random number within the specified range (inclusive).
+   * 
+   * @param {number} min - The minimum value of the range
+   * @param {number} max - The maximum value of the range
+   * @returns {number} - The randomly generated number
    */
-  random: function (min, max, options) {
-    const out = Math.floor(Math.random() * max) + min;
-    if (options === true)
-      console.log(`tools> generated random number from ${min} to ${max}`);
+  random(min, max) {
+    const out = Math.floor(Math.random() * (max - min + 1)) + min;
     return out;
   },
+
   /**
-   * erstellt Verzeichisstrucktur, wenn nicht schon vorhanden
-   * @param {String} path - Pfad bis zum ende der Strucktur.
-   * @param {boolean} options - true für log.
+   * Creates a directory path if it does not exist.
+   * 
+   * @param {string} path - The path to create
    */
-  path: function (path, options) {
-    let folder = path.split('/');
+  path(path) {
+    const folder = path.split('/');
     folder.pop();
     if (!fs.existsSync(path)) {
-      for (var i = 2; i <= folder.length; i++) {
+      for (let i = 2; i <= folder.length; i++) {
         let rest = '';
-        for (var j = 0; j < i; j++) {
+        for (let j = 0; j < i; j++) {
           rest = rest + folder[j] + '/';
         }
         if (!fs.existsSync(rest)) fs.mkdirSync(rest);
       }
-      if (options === true) console.log('tools> Path ' + path + ' now exists');
-    } else {
-      if (options === true)
-        console.log('tools> Path ' + path + ' already exists');
     }
   },
+
   /**
-   * löscht Verzeichisstrucktur
-   * @param {String} path - Ordner der zu löschen ist.
-   * @param {boolean} options - true für log.
+   * Deletes a directory and its contents recursively.
+   * 
+   * @param {string} path - The path to the directory
    */
-  delPath: function (path, options) {
+  delPath(path) {
     fs.rmSync(path, {
       recursive: true,
     });
-    if (options === true) console.log(`tools> ${path} is deleted`);
   },
+
   /**
-   * entfernt alle Indexe aus einem Array mit Wert value
-   * @param {any} value - Wert der zu enttfernen ist.
-   * @param {Array} arr - entsprechender Array.
-   * @param {boolean} options - true für log.
+   * Removes a specific value from an array.
+   * 
+   * @param {any[]} arr - The input array
+   * @param {any} value - The value to remove
+   * @param {boolean} options - A flag indicating whether to log a message
+   * @returns {any[]} - The modified array without the specified value
    */
-  popA: function (arr, value) {
-    for (let i = 0; i < arr.length; i++) {
-      if (arr[i] == value) {
-        arr.splice(i, 1);
-        i--;
-      }
-    }
-    if (options === true) console.log(`tools> ${value} aus Array entfernt`);
+  popA(arr, value, options) {
+    arr = arr.filter((item) => item !== value);
+    if (options) console.log(`tools> ${value} removed from Array`);
     return arr;
   },
+
 };
